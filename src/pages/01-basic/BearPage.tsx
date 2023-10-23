@@ -78,13 +78,19 @@ export const PolarBears = () => {
 export const BearsDisplay = () => {
   const bears = useBearsStore(useShallow((state) => state.bears));
   const doNothing = useBearsStore((state) => state.doNothing);
+  const addBear = useBearsStore((state) => state.addBear);
+  const claerBears = useBearsStore((state) => state.claerBears);
 
   return (
     <WhiteCard>
       <h1>Osos</h1>
-      <button onClick={() => doNothing()}>Do nothing</button>
+      <div className="flex flex-col gap-1 mt-2">
+        <button onClick={() => doNothing()}>No hace nada</button>
+        <button onClick={() => addBear()}>Agregar oso</button>
+        <button onClick={() => claerBears()}>Borrar osos</button>
+      </div>
 
-      <pre>{JSON.stringify(bears, null, 2)}</pre>
+      <pre className="mt-2">{JSON.stringify(bears, null, 2)}</pre>
     </WhiteCard>
   );
 };

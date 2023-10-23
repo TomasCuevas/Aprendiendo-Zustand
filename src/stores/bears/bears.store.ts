@@ -14,6 +14,8 @@ interface BearsState {
   pandaBears: number;
 
   bears: IBears[];
+  addBear(): void;
+  claerBears(): void;
 
   increaseBlackBears(by: number): void;
   increasePolarBears(by: number): void;
@@ -34,15 +36,33 @@ export const useBearsStore = create<BearsState>((set) => ({
     set((state) => ({ blackBears: state.blackBears + by }));
   },
 
+  //! INCREASE PANDA BEARS
   increasePandaBears(by) {
     set((state) => ({ pandaBears: state.pandaBears + by }));
   },
 
+  //! INCREASE POLAR BEARS
   increasePolarBears(by) {
     set((state) => ({ polarBears: state.polarBears + by }));
   },
 
+  //! DO NOTHING
   doNothing() {
     set((state) => ({ bears: [...state.bears] }));
+  },
+
+  //! ADD BEARS
+  addBear() {
+    set((state) => ({
+      bears: [
+        ...state.bears,
+        { id: crypto.randomUUID(), name: `Oso #${state.bears.length + 1}` },
+      ],
+    }));
+  },
+
+  //! CLEAR BEARS
+  claerBears() {
+    set({ bears: [] });
   },
 }));
