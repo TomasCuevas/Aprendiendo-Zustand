@@ -13,6 +13,10 @@ interface BearsState {
   polarBears: number;
   pandaBears: number;
 
+  computed: {
+    totalBeras: number;
+  };
+
   bears: IBears[];
   addBear(): void;
   claerBears(): void;
@@ -24,10 +28,21 @@ interface BearsState {
   doNothing(): void;
 }
 
-export const useBearsStore = create<BearsState>((set) => ({
+export const useBearsStore = create<BearsState>((set, get) => ({
   blackBears: 10,
   pandaBears: 5,
   polarBears: 2,
+
+  computed: {
+    get totalBeras(): number {
+      return (
+        get().blackBears +
+        get().pandaBears +
+        get().polarBears +
+        get().bears.length
+      );
+    },
+  },
 
   bears: [{ id: crypto.randomUUID(), name: "Oso #1" }],
 
