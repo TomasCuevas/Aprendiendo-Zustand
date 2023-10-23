@@ -1,0 +1,7 @@
+#nav a {
+  @apply inline-flex items-center w-full px-2 py-3 space-x-2 transition duration-150 ease-linear border-b border-slate-700 hover:bg-white/5;
+}
+
+#nav a.active {
+  @apply bg-blue-800;
+}
