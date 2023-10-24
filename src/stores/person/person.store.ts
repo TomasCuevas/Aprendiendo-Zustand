@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { type StateCreator, create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface PersonState {
@@ -11,22 +11,21 @@ interface Actions {
   setLastName(value: string): void;
 }
 
+const storeAPI: StateCreator<PersonState & Actions> = (set) => ({
+  firstName: "",
+  lastName: "",
+
+  //! SET FIST NAME
+  setFirstName(value) {
+    set((state) => ({ firstName: value }));
+  },
+
+  //! SET LAST NAME
+  setLastName(value) {
+    set((state) => ({ lastName: value }));
+  },
+});
+
 export const usePersonStore = create<PersonState & Actions>()(
-  persist(
-    (set) => ({
-      firstName: "",
-      lastName: "",
-
-      //! SET FIST NAME
-      setFirstName(value) {
-        set((state) => ({ firstName: value }));
-      },
-
-      //! SET LAST NAME
-      setLastName(value) {
-        set((state) => ({ lastName: value }));
-      },
-    }),
-    { name: "person-storage" }
-  )
+  persist(storeAPI, { name: "person-storage" })
 );
