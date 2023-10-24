@@ -9,10 +9,13 @@ import {
 
 //* COMPONENTS *//
 import { WhiteCard } from "../../components";
-import { useBearsStore } from "../../stores";
+
+//* STORES *//
+import { useBearsStore, usePersonStore } from "../../stores";
 
 export const Dashboard = () => {
   const totalBears = useBearsStore((state) => state.computed.totalBeras);
+  const firstName = usePersonStore((state) => state.firstName);
 
   return (
     <>
@@ -30,7 +33,7 @@ export const Dashboard = () => {
         <WhiteCard centered>
           <IoAccessibilityOutline size={50} className="text-indigo-600" />
           <h2>Persona</h2>
-          <p>Información</p>
+          <p>{firstName}</p>
         </WhiteCard>
 
         <WhiteCard centered>
