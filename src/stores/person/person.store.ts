@@ -1,6 +1,6 @@
 import { type StateCreator, create } from "zustand";
 import { persist } from "zustand/middleware";
-import { customSessionStorage } from "../";
+import { firebaseStorage } from "../storages/firabase.storage";
 
 interface PersonState {
   firstName: string;
@@ -30,6 +30,6 @@ const storeAPI: StateCreator<PersonState & Actions> = (set) => ({
 export const usePersonStore = create<PersonState & Actions>()(
   persist(storeAPI, {
     name: "person-storage",
-    storage: customSessionStorage,
+    storage: firebaseStorage,
   })
 );

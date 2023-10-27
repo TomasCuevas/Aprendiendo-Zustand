@@ -1,4 +1,4 @@
 export * from "./bears/bears.store";
 export * from "./person/person.store";
 
-export * from "./storages/customSessionStorage.storage";
+export * from "./storages/session.storage";
