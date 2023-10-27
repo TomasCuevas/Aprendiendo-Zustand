@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { UUID } from "crypto";
+import { persist } from "zustand/middleware";
 
 //* INTERFACES *//
 interface IBears {
@@ -13,9 +14,7 @@ interface BearsState {
   polarBears: number;
   pandaBears: number;
 
-  computed: {
-    totalBeras: number;
-  };
+  totalBeras(): number;
 
   bears: IBears[];
   addBear(): void;
@@ -28,56 +27,59 @@ interface BearsState {
   doNothing(): void;
 }
 
-export const useBearsStore = create<BearsState>((set, get) => ({
-  blackBears: 10,
-  pandaBears: 5,
-  polarBears: 2,
+export const useBearsStore = create<BearsState>()(
+  persist(
+    (set, get) => ({
+      blackBears: 10,
+      pandaBears: 5,
+      polarBears: 2,
 
-  computed: {
-    get totalBeras(): number {
-      return (
-        get().blackBears +
-        get().pandaBears +
-        get().polarBears +
-        get().bears.length
-      );
-    },
-  },
+      totalBeras() {
+        return (
+          get().blackBears +
+          get().pandaBears +
+          get().polarBears +
+          get().bears.length
+        );
+      },
 
-  bears: [{ id: crypto.randomUUID(), name: "Oso #1" }],
+      bears: [{ id: crypto.randomUUID(), name: "Oso #1" }],
 
-  //! INCREASE BLACK BEARS
-  increaseBlackBears(by) {
-    set((state) => ({ blackBears: state.blackBears + by }));
-  },
+      //! INCREASE BLACK BEARS
+      increaseBlackBears(by) {
+        set((state) => ({ blackBears: state.blackBears + by }));
+      },
 
-  //! INCREASE PANDA BEARS
-  increasePandaBears(by) {
-    set((state) => ({ pandaBears: state.pandaBears + by }));
-  },
+      //! INCREASE PANDA BEARS
+      increasePandaBears(by) {
+        set((state) => ({ pandaBears: state.pandaBears + by }));
+      },
 
-  //! INCREASE POLAR BEARS
-  increasePolarBears(by) {
-    set((state) => ({ polarBears: state.polarBears + by }));
-  },
+      //! INCREASE POLAR BEARS
+      increasePolarBears(by) {
+        set((state) => ({ polarBears: state.polarBears + by }));
+      },
 
-  //! DO NOTHING
-  doNothing() {
-    set((state) => ({ bears: [...state.bears] }));
-  },
+      //! DO NOTHING
+      doNothing() {
+        set((state) => ({ bears: [...state.bears] }));
+      },
 
-  //! ADD BEARS
-  addBear() {
-    set((state) => ({
-      bears: [
-        ...state.bears,
-        { id: crypto.randomUUID(), name: `Oso #${state.bears.length + 1}` },
-      ],
-    }));
-  },
+      //! ADD BEARS
+      addBear() {
+        set((state) => ({
+          bears: [
+            ...state.bears,
+            { id: crypto.randomUUID(), name: `Oso #${state.bears.length + 1}` },
+          ],
+        }));
+      },
 
-  //! CLEAR BEARS
-  claerBears() {
-    set({ bears: [] });
-  },
-}));
+      //! CLEAR BEARS
+      claerBears() {
+        set({ bears: [] });
+      },
+    }),
+    { name: "bears-store" }
+  )
+);
