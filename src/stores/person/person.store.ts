@@ -21,12 +21,12 @@ const storeAPI: StateCreator<
 
   //! SET FIST NAME
   setFirstName(value) {
-    set((state) => ({ firstName: value }), false, "setFirstName");
+    set({ firstName: value }, false, "setFirstName");
   },
 
   //! SET LAST NAME
   setLastName(value) {
-    set((state) => ({ lastName: value }), false, "setLastName");
+    set({ lastName: value }, false, "setLastName");
   },
 });
 
